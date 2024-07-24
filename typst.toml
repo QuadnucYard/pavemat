@@ -1,0 +1,10 @@
+[package]
+name = "pavemat"
+version = "0.1.0"
+entrypoint = "src/lib.typ"
+authors = ["QuadnucYard <@QuadnucYard>"]
+license = "MIT"
+description = "Empower matrices with dividing lines and color blocks."
+categories = ["visualization"]
+keywords = ["matrix", "color", "line"]
+repository = "https://github.com/QuadnucYard/pavemat"
