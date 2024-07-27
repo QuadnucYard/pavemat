@@ -53,8 +53,9 @@
   stroke: (dash: "dashed", thickness: 0.5pt),
   fills: (:),
   dir-chars: (:),
-  display-style: true,
+  delim: auto,
   block: auto,
+  display-style: true,
   debug: false,
 ) = {
   // direction character definition
@@ -226,9 +227,18 @@
       block
     }
 
-    let delim = ma.fields().at("delim", default: "(")
+    let delim = if delim == auto {
+      ma.fields().at("delim", default: "(")
+    } else {
+      delim
+    }
 
-    let ret = math.vec(delim: delim, mat-grid)
+    let ret = mat-grid
+
+    if delim != none {
+      ret = math.vec(delim: delim, ret)
+    }
+
     if display-style {
       ret = math.display(ret)
     }

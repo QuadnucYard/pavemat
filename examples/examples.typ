@@ -58,7 +58,7 @@ Turn `debug` on to see the hidden lines.
   debug: true,
 )
 
-With more paths and default fill.
+With more paths, a default fill and a different delimiter.
 
 #pavemat(
   a,
@@ -73,6 +73,7 @@ With more paths and default fill.
     "0-0": red.transparentize(80%),
     "3-2": blue.transparentize(80%),
   ),
+  delim: "["
 )
 
 You can also pass a ```typ math.mat``` to it instead of a `math.equation`.
@@ -92,4 +93,5 @@ If you don't like `WASD`, you can just overwrite it, but be careful of case-sens
   ),
   dir-chars: (up: "U", down: "D", left: "L", right: "R"),
   block: true,
+  delim: none
 )
