@@ -1,4 +1,4 @@
-#import "lib.typ": pavemat
+#import "../src/lib.typ": pavemat
 
 #{
   set math.mat(row-gap: 0.25em, column-gap: 0.1em)
@@ -76,7 +76,7 @@ With more paths and default fill.
 )
 
 You can also pass a ```typ math.mat``` to it instead of a `math.equation`.
-If you don't like `WASD`, you can just overwrite it, but be careful of caution case-sensitivity!
+If you don't like `WASD`, you can just overwrite it, but be careful of case-sensitivity!
 
 #pavemat(
   math.mat(..range(5).map(i => range(5).map(j => i * 5 + j))),
