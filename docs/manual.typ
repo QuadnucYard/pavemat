@@ -78,7 +78,7 @@ The style has its scope, ended by a right bracket `]`. You can optionally add on
   - When encountering `]`, the style resets to the previous state (in this case, blue stroke).
 
 
-=== Custom Control Characters
+=== Custom Direction Characters
 
 If you prefer `UDLR` to `WASD`, you can customize control characters in through arguments. See usage.
 

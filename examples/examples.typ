@@ -1,20 +1,10 @@
 #import "../src/lib.typ": pavemat
+#import "logo.typ": logo
 
 #{
-  set math.mat(row-gap: 0.25em, column-gap: 0.1em)
-  set text(size: 2em)
-
   show: align.with(center)
 
-  pavemat(
-    pave: ("SDS(dash: 'solid')DDD]WW", (path: "sdDDD", stroke: aqua.darken(30%))),
-    fills: (
-      "0-0": green.transparentize(80%),
-      "1-1": blue.transparentize(80%),
-      "[0-0]": green.transparentize(60%),
-      "[1-1]": blue.transparentize(60%),
-    ),
-  )[$mat(P, a, v, e; "", m, a, t)$]
+  logo
 }
 
 #let a = $ mat(1, 2, 3; 4, 5, 6; 7, 8, 9; 10, 11, 12) $
