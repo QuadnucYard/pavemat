@@ -82,7 +82,7 @@
     if type(item) == str {
       item = (path: item)
     }
-    let path = item.path
+    let path = item.path.replace("'", "\"")
     let from = item.at("from", default: "top-left")
 
     // the start position

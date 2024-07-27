@@ -7,7 +7,7 @@
   show: align.with(center)
 
   pavemat(
-    pave: ("SDS(dash: \"solid\")DDD]WW", (path: "sdDDD", stroke: aqua.darken(30%))),
+    pave: ("SDS(dash: 'solid')DDD]WW", (path: "sdDDD", stroke: aqua.darken(30%))),
     fills: (
       "0-0": green.transparentize(80%),
       "1-1": blue.transparentize(80%),
@@ -40,7 +40,7 @@ It is possible to customize stroke of path segments!
 #pavemat(
   a,
   pave: (
-    path: "AA(paint: red, thickness: 2pt)WdD(paint: blue)Ww(thickness: 1pt, dash: \"dotted\")AaS]Aw]W]D",
+    path: "AA(paint: red, thickness: 2pt)WdD(paint: blue)Ww(thickness: 1pt, dash: 'dotted')AaS]Aw]W]D",
     from: "bottom-right",
   ),
   fills: maroon.transparentize(90%),
@@ -51,7 +51,7 @@ Turn `debug` on to see the hidden lines.
 #pavemat(
   a,
   pave: (
-    path: "AA(paint: red, thickness: 2pt)WdD(paint: blue)Ww(thickness: 1pt, dash: \"dotted\")AaS]Aw]W]D",
+    path: "AA(paint: red, thickness: 2pt)WdD(paint: blue)Ww(thickness: 1pt, dash: 'dotted')AaS]Aw]W]D",
     from: "bottom-right",
   ),
   fills: maroon.transparentize(90%),
