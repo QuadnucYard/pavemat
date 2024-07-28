@@ -38,6 +38,11 @@ The logo example:
 
 More examples can be found in `examples/examples.typ`.
 
+![](./examples/example1.svg)
+![](./examples/example2.svg)
+![](./examples/example4.svg)
+![](./examples/example5.svg)
+
 ## Manual
 
 See `docs/manual.typ`.

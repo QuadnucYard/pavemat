@@ -15,7 +15,7 @@ $ display(#a) $
 
 Let's add some dashed lines and fillings!
 
-#pavemat(
+#let e1 = pavemat(
   a,
   pave: "dSDSDSLLAAWASSDD",
   fills: (
@@ -24,10 +24,11 @@ Let's add some dashed lines and fillings!
     "3-0": green.transparentize(80%),
   ),
 )
+#e1
 
 It is possible to customize stroke of path segments!
 
-#pavemat(
+#let e2 = pavemat(
   a,
   pave: (
     path: "AA(paint: red, thickness: 2pt)WdD(paint: blue)Ww(thickness: 1pt, dash: 'dotted')AaS]Aw]W]D",
@@ -35,10 +36,11 @@ It is possible to customize stroke of path segments!
   ),
   fills: maroon.transparentize(90%),
 )
+#e2
 
 Turn `debug` on to see the hidden lines.
 
-#pavemat(
+#let e3 = pavemat(
   a,
   pave: (
     path: "AA(paint: red, thickness: 2pt)WdD(paint: blue)Ww(thickness: 1pt, dash: 'dotted')AaS]Aw]W]D",
@@ -47,10 +49,11 @@ Turn `debug` on to see the hidden lines.
   fills: maroon.transparentize(90%),
   debug: true,
 )
+#e3
 
 With more paths, a default fill and a different delimiter.
 
-#pavemat(
+#let e4 = pavemat(
   a,
   pave: (
     (path: "WASD", from: (2, 2)),
@@ -65,11 +68,12 @@ With more paths, a default fill and a different delimiter.
   ),
   delim: "["
 )
+#e4
 
 You can also pass a ```typ math.mat``` to it instead of a `math.equation`.
 If you don't like `WASD`, you can just overwrite it, but be careful of case-sensitivity!
 
-#pavemat(
+#let e5 = pavemat(
   math.mat(..range(5).map(i => range(5).map(j => i * 5 + j))),
   pave: (
     (path: "DDDDDRUUUUU", from: (0, 2)),
@@ -85,3 +89,4 @@ If you don't like `WASD`, you can just overwrite it, but be careful of case-sens
   block: true,
   delim: none
 )
+#e5

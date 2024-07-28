@@ -1,14 +1,14 @@
-<svg class="typst-doc" viewBox="0 0 104 70" width="104pt" height="70pt" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:h5="http://www.w3.org/1999/xhtml">
+<svg class="typst-doc" viewBox="0 0 111.166 48.18000000000001" width="111.166pt" height="48.18000000000001pt" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:h5="http://www.w3.org/1999/xhtml">
     <g>
         <g transform="translate(0 0)">
-            <path class="typst-shape" fill="#ffffff" d="M 0 0 L 0 70 L 104 70 L 104 0 Z "/>
+            <path class="typst-shape" fill="#ffffff" d="M 0 0 L 0 48.18 L 111.166 48.18 L 111.166 0 Z "/>
         </g>
-        <g transform="translate(8.333333333333332 41.22333333333333)">
+        <g transform="translate(11 29.590000000000003)">
             <g class="typst-text" transform="scale(1, -1)">
                 <use xlink:href="#g5C4FB91E8E3577D31232A0CF2A0651A0" x="0" fill="#000000"/>
             </g>
         </g>
-        <g transform="translate(19.31133333333333 15.197333333333333)">
+        <g transform="translate(21.978 3.564)">
             <g class="typst-group">
                 <g>
                     <g transform="translate(0 0)">
@@ -130,7 +130,7 @@
                 </g>
             </g>
         </g>
-        <g transform="translate(86.52133333333333 41.22333333333333)">
+        <g transform="translate(89.188 29.590000000000003)">
             <g class="typst-text" transform="scale(1, -1)">
                 <use xlink:href="#g8E6B21DE3FD589443CA83B646148E213" x="0" fill="#000000"/>
             </g>
