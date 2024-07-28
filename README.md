@@ -1,7 +1,7 @@
 # Pavemat
 
 <div style="text-align: center">
-  <img src="./logo.svg"/>
+  <img src="./examples/logo.svg"/>
   <p><strong> pavement + matrix </strong></p>
 </div>
 
@@ -22,18 +22,25 @@ The pavemat is a versatile tool for creating styled matrices with custom paths, 
 The logo example:
 
 ```typst
-#set math.mat(row-gap: 0.25em, column-gap: 0.1em)
-#set text(size: 2em)
+#{
+  set math.mat(row-gap: 0.25em, column-gap: 0.1em)
+  set text(size: 2em)
 
-#pavemat(
-  pave: ("SDS(dash: 'solid')DDD]WW", (path: "sdDDD", stroke: aqua.darken(30%))),
-  fills: (
-    "0-0": green.transparentize(80%),
-    "1-1": blue.transparentize(80%),
-    "[0-0]": green.transparentize(60%),
-    "[1-1]": blue.transparentize(60%),
-  ),
-)[$mat(P, a, v, e; "", m, a, t)$]
+  pavemat(
+    pave: (
+      "SDS(dash: 'solid')DDD]WW",
+      (path: "sdDDD", stroke: aqua.darken(30%))
+    ),
+    stroke: (dash: "dashed", thickness: 1pt, paint: yellow),
+    fills: (
+      "0-0": green.transparentize(80%),
+      "1-1": blue.transparentize(80%),
+      "[0-0]": green.transparentize(60%),
+      "[1-1]": blue.transparentize(60%),
+    ),
+    delim: "[",
+  )[$mat(P, a, v, e; "", m, a, t)$]
+}
 ```
 
 More examples can be found in `examples/examples.typ`.

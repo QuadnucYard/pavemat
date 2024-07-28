@@ -5,14 +5,18 @@
   set text(size: 2em)
 
   pavemat(
-    pave: ("SDS(dash: 'solid')DDD]WW", (path: "sdDDD", stroke: aqua.darken(30%))),
+    pave: (
+      "SDS(dash: 'solid')DDD]WW",
+      (path: "sdDDD", stroke: aqua.darken(30%))
+    ),
+    stroke: (dash: "dashed", thickness: 1pt, paint: red),
     fills: (
       "0-0": green.transparentize(80%),
       "1-1": blue.transparentize(80%),
       "[0-0]": green.transparentize(60%),
       "[1-1]": blue.transparentize(60%),
     ),
-    delim: "["
+    delim: "[",
   )[$mat(P, a, v, e; "", m, a, t)$]
 }
 
