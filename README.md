@@ -1,8 +1,8 @@
 # Pavemat
 
 <div style="text-align: center">
-  <p><strong> pavement + matrix </strong></p>
   <img src="./logo.svg"/>
+  <p><strong> pavement + matrix </strong></p>
 </div>
 
 ## Introduction

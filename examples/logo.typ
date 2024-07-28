@@ -17,5 +17,5 @@
 }
 
 
-#set page(width: 104pt, height: 70pt)
+#set page(width: 104pt, height: 70pt, fill: white)
 #logo
