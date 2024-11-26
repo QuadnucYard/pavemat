@@ -110,7 +110,7 @@ In the `fills` parameter, position strings determine which cells to fill with th
   #argument("eq", types: ("math.equation", "math.mat", "array"))[
     The input matrix expression to be styled. It can be a mathematical equation or a matrix. Specifically,
 
-    - A ```typc math.equation```. It should contains only a `math.mat` as its body. Example: ```typ $mat(1, 2; 3, 4)$```. ```typc math.display``` in the equation is not supported yet.
+    - A ```typc math.equation```. It should contain only a `math.mat` as its body. Example: ```typ $mat(1, 2; 3, 4)$```. ```typc math.display``` in the equation is not supported yet.
     - A `math.mat`. Example: ```typc math.mat((1, 2), (3, 4))```.
     - A nested array. Example: ```typc ((1, 2), (3, 4))```.
 
@@ -128,7 +128,7 @@ In the `fills` parameter, position strings determine which cells to fill with th
   #argument("stroke", types: ("length", "color", "gradient", "pattern", "dictionary"))[
     The global stroke style applying to all segments. This argument will be passed to `cell.stroke`.
 
-    Accepts anything can be use as stroke. Examples: ```typc blue + 1pt```, ```typc (dash: "dashed", thickness: 0.5pt)```.
+    Accepts anything can be used as stroke. Examples: ```typc blue + 1pt```, ```typc (dash: "dashed", thickness: 0.5pt)```.
   ]
 
   #argument("fills", types: ("color", "gradient", "pattern"))[
