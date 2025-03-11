@@ -219,7 +219,7 @@
     let row-gap = ma.fields().at("row-gap", default: math.mat.row-gap) / 2
     let col-gap = ma.fields().at("column-gap", default: math.mat.column-gap) / 2
 
-    let mat-grid = grid(columns: m, align: center + horizon, inset: (x: col-gap, y: row-gap), ..cells, ..dashes)
+    let mat-grid = grid(columns: m, align: ma.fields().at("align", default: math.mat.align), inset: (x: col-gap, y: row-gap), ..cells, ..dashes)
 
     let is-block = if block == auto {
       eq.fields().at("block", default: math.equation.block)
