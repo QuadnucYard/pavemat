@@ -13,7 +13,14 @@ This is the original matrix:
 
 $ display(#a) $
 
-Let's add some dashed lines and fillings!
+Let's convert it to a _pavemat_!
+
+#let e0 = pavemat(a, fills: ("": teal))
+#e0
+
+These two should look exactly the same with zero gaps. Note that there will be extra top and bottom insets, compared with the original mat.
+
+Then add some dashed lines and fillings.
 
 #let e1 = pavemat(
   a,
@@ -74,7 +81,7 @@ You can also pass a ```typ math.mat``` to it instead of a `math.equation`.
 If you don't like `WASD`, you can just overwrite it, but be careful of case-sensitivity!
 
 #let e5 = pavemat(
-  math.mat(..range(5).map(i => range(5).map(j => i * 5 + j))),
+  math.mat(..range(5).map(i => range(5).map(j => i * 5 + j)), align: right),
   pave: (
     (path: "DDDDDRUUUUU", from: (0, 2)),
     (path: "RRRRRDLLLLL", from: (2, 0)),

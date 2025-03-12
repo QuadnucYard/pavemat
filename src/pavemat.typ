@@ -47,6 +47,7 @@
   return points
 }
 
+/// Create a _pavemat_ from [`math.mat`] or [`math.equation`].
 #let pavemat(
   eq,
   pave: (),
@@ -62,7 +63,6 @@
   let dirs = (up: "W", down: "S", left: "A", right: "D") + dir-chars
 
   // get the matrix
-  // @typstyle off
   let ma = if "body" in eq.fields() { eq.body } else { eq }
 
   // pavement
@@ -95,7 +95,7 @@
       (n, 0)
     } else if from == "bottom-right" {
       (n, m)
-    } else if type(from) == "array" and from.len() == 2 {
+    } else if type(from) == array and from.len() == 2 {
       from
     } else {
       panic(`expect one of "top-left", "top-right", "bottom-left", "bottom-right" or tuple (x, y)`.text)
@@ -126,33 +126,17 @@
 
       // move one step
       let dd = upper(c)
-      let ii = if dd == dirs.up {
-        i - 1
-      } else if dd == dirs.down {
-        i + 1
-      } else {
-        i
-      }
-      let jj = if dd == dirs.left {
-        j - 1
-      } else if dd == dirs.right {
-        j + 1
-      } else {
-        j
-      }
+      let ii = if dd == dirs.up { i - 1 } else if dd == dirs.down { i + 1 } else { i }
+      let jj = if dd == dirs.left { j - 1 } else if dd == dirs.right { j + 1 } else { j }
 
       // add stroke line if the direction character is upper
       let cur-stroke = stroke-stack.last()
 
       // debug line
-      if debug != false {
+      if debug {
         if c != upper(c) {
           c = upper(c)
-          cur-stroke = if debug == true {
-            gray + 0.5pt
-          } else {
-            debug
-          }
+          cur-stroke = if debug == true { gray + 0.5pt } else { debug }
         }
       }
 
@@ -170,7 +154,8 @@
         hfence.at(i * m + j) = true
       }
 
-      (i, j) = (ii, jj)
+      i = ii
+      j = jj
       k += 1
     }
   }
@@ -196,9 +181,7 @@
     }
 
     let (i, j) = pos.split("-")
-    // @typstyle off
     i = if i == "top" { 0 } else if i == "bottom" { n - 1 } else { int(i) }
-    // @typstyle off
     j = if j == "left" { 0 } else if j == "right" { m - 1 } else { int(j) }
 
     let points = if exact {
@@ -212,37 +195,57 @@
     }
   }
 
-  // grid cells
-  let cells = ma.rows.flatten().zip(cell-fills).map(((c, f)) => grid.cell(math.equation(c), fill: f))
-
   return context {
-    let row-gap = ma.fields().at("row-gap", default: math.mat.row-gap) / 2
-    let col-gap = ma.fields().at("column-gap", default: math.mat.column-gap) / 2
+    // calculate the minimum ascent and descent from a paren.
+    let dummy = $\($
+    let base-ascent = measure(text(top-edge: "bounds", dummy)).height
+    let base-descent = (
+      measure(text(bottom-edge: "bounds", dummy)).height - measure(text(bottom-edge: "baseline", dummy)).height
+    )
 
-    let mat-grid = grid(columns: m, align: ma.fields().at("align", default: math.mat.align), inset: (x: col-gap, y: row-gap), ..cells, ..dashes)
-
-    let is-block = if block == auto {
-      eq.fields().at("block", default: math.equation.block)
-    } else {
-      block
+    let cells = for (i, row) in ma.rows.enumerate() {
+      let ascent = base-ascent
+      let descent = base-descent
+      for (j, cell) in row.enumerate() {
+        let eq = math.equation(cell)
+        ascent = calc.max(ascent, measure(text(top-edge: "bounds", eq)).height)
+        descent = calc.max(
+          descent,
+          measure(text(bottom-edge: "bounds", eq)).height - measure(text(bottom-edge: "baseline", eq)).height,
+        )
+      }
+      let height = ascent + descent
+      let strut = box(height: ascent, width: 0pt) // to unify the ascent
+      for (j, cell) in row.enumerate() {
+        let eq = math.equation(cell)
+        let f = cell-fills.at(i * m + j)
+        (grid.cell(box(height: height, eq + strut), fill: f),)
+      }
     }
 
-    let delim = if delim == auto {
-      ma.fields().at("delim", default: "(")
-    } else {
-      delim
-    }
+    let ma-fields = ma.fields()
+    let row-gap = ma-fields.at("row-gap", default: math.mat.row-gap) / 2
+    let col-gap = ma-fields.at("column-gap", default: math.mat.column-gap) / 2
+
+    let mat-grid = grid(
+      columns: m,
+      align: ma-fields.at("align", default: math.mat.align) + top,
+      inset: (x: col-gap, y: row-gap),
+      ..cells, ..dashes
+    )
+
+    let is-block = if block == auto { eq.fields().at("block", default: math.equation.block) } else { block }
+
+    let delim = if delim == auto { ma-fields.at("delim", default: math.mat.delim) } else { delim }
 
     let ret = mat-grid
 
     if delim != none {
       ret = math.vec(delim: delim, ret)
     }
-
     if display-style {
       ret = math.display(ret)
     }
-
     return math.equation(ret, block: is-block)
   }
 }
