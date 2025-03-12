@@ -1,11 +1,9 @@
 #import "../src/lib.typ": pavemat
 #import "logo.typ": logo
 
-#{
-  show: align.with(center)
+#align(center, logo)
 
-  logo
-}
+#show: columns.with(2)
 
 #let a = $ mat(1, 2, 3; 4, 5, 6; 7, 8, 9; 10, 11, 12) $
 
@@ -73,12 +71,13 @@ With more paths, a default fill and a different delimiter.
     "0-0": red.transparentize(80%),
     "3-2": blue.transparentize(80%),
   ),
-  delim: "["
+  delim: "[",
 )
 #e4
 
 You can also pass a ```typ math.mat``` to it instead of a `math.equation`.
 If you don't like `WASD`, you can just overwrite it, but be careful of case-sensitivity!
+Additionally, it will automatically inherit parameters of `math.mat`.
 
 #let e5 = pavemat(
   math.mat(..range(5).map(i => range(5).map(j => i * 5 + j)), align: right),
@@ -94,6 +93,6 @@ If you don't like `WASD`, you can just overwrite it, but be careful of case-sens
   ),
   dir-chars: (up: "U", down: "D", left: "L", right: "R"),
   block: true,
-  delim: none
+  delim: none,
 )
 #e5

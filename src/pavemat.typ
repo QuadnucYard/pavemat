@@ -1,6 +1,7 @@
-#let _get-fills-from(a, i, j, hfence: (), vfence: ()) = {
-  // number of rows and columns
-  let (n, m) = (a.len(), a.at(0).len())
+/// The core library of pavemat.
+
+
+#let _get-fills-from(n, m, i, j, hfence: (), vfence: ()) = {
   // has each grid been visited
   let vis = (false,) * (n * m)
   // check pos inside
@@ -47,38 +48,13 @@
   return points
 }
 
-/// Create a _pavemat_ from [`math.mat`] or [`math.equation`].
-#let pavemat(
-  eq,
-  pave: (),
-  stroke: (dash: "dashed", thickness: 0.5pt),
-  fills: (:),
-  dir-chars: (:),
-  delim: auto,
-  block: auto,
-  display-style: true,
-  debug: false,
-) = {
-  // direction character definition
-  let dirs = (up: "W", down: "S", left: "A", right: "D") + dir-chars
 
-  // get the matrix
-  let ma = if "body" in eq.fields() { eq.body } else { eq }
-
-  // pavement
-  if type(pave) != array {
-    pave = (pave,)
-  }
-
-  // number of rows and columns
-  let (n, m) = (ma.rows.len(), ma.rows.at(0).len())
-
+#let _parse-pave-array(n, m, pave, dirs, debug, base-stroke) = {
   let hfence = (false,) * ((n + 1) * m)
   let vfence = (false,) * (n * (m + 1))
 
   let dashes = ()
 
-  // parse pave array
   for item in pave {
     if type(item) == str {
       item = (path: item)
@@ -101,7 +77,7 @@
       panic(`expect one of "top-left", "top-right", "bottom-left", "bottom-right" or tuple (x, y)`.text)
     }
 
-    let stroke-stack = (item.at("stroke", default: stroke),)
+    let stroke-stack = (item.at("stroke", default: base-stroke),)
     let k = 0
 
     while k < path.len() {
@@ -160,11 +136,12 @@
     }
   }
 
-  let cell-fills = (none,) * (n * m)
+  return (hfence, vfence, dashes)
+}
 
-  if type(fills) != dictionary {
-    fills = ("": fills)
-  }
+
+#let _get-cell-fills(n, m, fills, hfence, vfence) = {
+  let cell-fills = (none,) * (n * m)
 
   // make cells filled
   for (pos, fill) in fills {
@@ -187,7 +164,7 @@
     let points = if exact {
       ((i, j),)
     } else {
-      _get-fills-from(ma.rows, i, j, hfence: hfence, vfence: vfence)
+      _get-fills-from(n, m, i, j, hfence: hfence, vfence: vfence)
     }
 
     for (i, j) in points {
@@ -195,57 +172,104 @@
     }
   }
 
-  return context {
-    // calculate the minimum ascent and descent from a paren.
-    let dummy = $\($
-    let base-ascent = measure(text(top-edge: "bounds", dummy)).height
-    let base-descent = (
-      measure(text(bottom-edge: "bounds", dummy)).height - measure(text(bottom-edge: "baseline", dummy)).height
+  return cell-fills
+}
+
+
+#let _build-grid-mat(ma, dashes, cell-fills, delim, is-block, display-style) = context {
+  let m = ma.rows.at(0).len()
+
+  let ma-fields = ma.fields()
+  let row-gap = ma-fields.at("row-gap", default: math.mat.row-gap) / 2
+  let col-gap = ma-fields.at("column-gap", default: math.mat.column-gap) / 2
+
+  let is-block = if is-block == auto { math.equation.block } else { is-block }
+  let delim = if delim == auto { ma-fields.at("delim", default: math.mat.delim) } else { delim }
+
+  // calculate the minimum ascent and descent from a paren.
+  let dummy = $\($
+  let base-ascent = measure(text(top-edge: "bounds", dummy)).height
+  let base-descent = (
+    measure(text(bottom-edge: "bounds", dummy)).height - measure(text(bottom-edge: "baseline", dummy)).height
+  )
+
+  let row-heights = ()
+  let cells = for (i, row) in ma.rows.enumerate() {
+    // adjust the ascent and descent for each line
+    let combined = math.equation(row.join())
+    let ascent = calc.max(base-ascent, measure(text(top-edge: "bounds", combined)).height)
+    let descent = calc.max(
+      base-descent,
+      measure(text(bottom-edge: "bounds", combined)).height - measure(text(bottom-edge: "baseline", combined)).height,
     )
 
-    let cells = for (i, row) in ma.rows.enumerate() {
-      let ascent = base-ascent
-      let descent = base-descent
-      for (j, cell) in row.enumerate() {
-        let eq = math.equation(cell)
-        ascent = calc.max(ascent, measure(text(top-edge: "bounds", eq)).height)
-        descent = calc.max(
-          descent,
-          measure(text(bottom-edge: "bounds", eq)).height - measure(text(bottom-edge: "baseline", eq)).height,
-        )
-      }
-      let height = ascent + descent
-      let strut = box(height: ascent, width: 0pt) // to unify the ascent
-      for (j, cell) in row.enumerate() {
-        let eq = math.equation(cell)
-        let f = cell-fills.at(i * m + j)
-        (grid.cell(box(height: height, eq + strut), fill: f),)
-      }
+    let height = ascent + descent
+    let strut = box(height: ascent, width: 0pt) // to unify the ascent
+    for (j, cell) in row.enumerate() {
+      let eq = math.equation(cell)
+      let f = cell-fills.at(i * m + j)
+      (grid.cell(eq + strut, fill: f),)
     }
-
-    let ma-fields = ma.fields()
-    let row-gap = ma-fields.at("row-gap", default: math.mat.row-gap) / 2
-    let col-gap = ma-fields.at("column-gap", default: math.mat.column-gap) / 2
-
-    let mat-grid = grid(
-      columns: m,
-      align: ma-fields.at("align", default: math.mat.align) + top,
-      inset: (x: col-gap, y: row-gap),
-      ..cells, ..dashes
-    )
-
-    let is-block = if block == auto { eq.fields().at("block", default: math.equation.block) } else { block }
-
-    let delim = if delim == auto { ma-fields.at("delim", default: math.mat.delim) } else { delim }
-
-    let ret = mat-grid
-
-    if delim != none {
-      ret = math.vec(delim: delim, ret)
-    }
-    if display-style {
-      ret = math.display(ret)
-    }
-    return math.equation(ret, block: is-block)
+    row-heights.push(height + row-gap * 2)
   }
+
+  let mat-grid = grid(
+    columns: m,
+    align: ma-fields.at("align", default: math.mat.align),
+    inset: (x: col-gap, y: row-gap),
+    rows: row-heights,
+    ..cells, ..dashes
+  )
+
+  let ret = mat-grid
+
+  if delim != none {
+    ret = math.vec(delim: delim, ret)
+  }
+  if display-style {
+    ret = math.display(ret)
+  }
+  return math.equation(ret, block: is-block)
+}
+
+
+/// Create a _pavemat_ from [`math.mat`] or [`math.equation`].
+#let pavemat(
+  eq,
+  pave: (),
+  stroke: (dash: "dashed", thickness: 0.5pt),
+  fills: (:),
+  dir-chars: (:),
+  delim: auto,
+  block: auto,
+  display-style: true,
+  debug: false,
+) = {
+  // direction character definition
+  let dirs = (up: "W", down: "S", left: "A", right: "D") + dir-chars
+
+  // get the matrix
+  let ma = if "body" in eq.fields() { eq.body } else { eq }
+
+  // pavement
+  if type(pave) != array {
+    pave = (pave,)
+  }
+
+  if type(fills) != dictionary {
+    fills = ("": fills)
+  }
+
+  if block == auto {
+    block = eq.fields().at("block", default: auto)
+  }
+
+  // number of rows and columns
+  let (n, m) = (ma.rows.len(), ma.rows.at(0).len())
+
+  let (hfence, vfence, dashes) = _parse-pave-array(n, m, pave, dirs, debug, stroke)
+
+  let cell-fills = _get-cell-fills(n, m, fills, hfence, vfence)
+
+  return _build-grid-mat(ma, dashes, cell-fills, delim, block, display-style)
 }
