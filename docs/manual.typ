@@ -1,28 +1,25 @@
-#import "@preview/mantys:0.1.4": *
-#import "@preview/mantys:0.1.4": theme
+#import "@preview/mantys:1.0.1": *
 #import "../src/lib.typ": pavemat
 
-#show: mantys.with(
-  name: "pavemat",
-  title: [Pavemat],
-  // subtitle: [A subtitle for the manual],
-  // info: [A short descriptive text for the package.],
-  authors: "QuadnucYard",
-  license: "MIT",
-  url: "https://github.com/QuadnucYard/pavemat",
-  version: "0.1.0",
-  date: "2024-7-27",
+#let show-module(name, ..tidy-args) = tidy-module(
+  name,
+  read("../src/" + name + ".typ"),
+  // Some defaults you want to set
+  legacy-parser: true,
+  ..tidy-args.named(),
+)
+
+#show: mantys(
   abstract: [
     The pavemat is a versatile tool for creating styled matrices with custom paths, strokes, and fills. It allows users to define how paths should be drawn through the matrix, apply different strokes to these paths, and fill specific cells with various colors. This function is particularly useful for visualizing complex data structures, mathematical matrices, and creating custom grid layouts.
   ],
 
-  examples-scope: (pavemat: pavemat),
+  examples-scope: (scope: (pavemat: pavemat)),
 
-  titlepage: titlepage.with(toc: false),
-  index: none,
+  ..toml("../typst.toml"),
 )
 
-= Basics
+= Syntax
 
 == Pave string
 
@@ -92,82 +89,13 @@ A position string is formatted as `"{x}-{y}"` or `"[{x}-{y}]"`. Examples include
 
 In the `fills` parameter, position strings determine which cells to fill with the specified color. By default, a position string without brackets (`"{x}-{y}"`) fills the connected block of cells containing `(x, y)`. When enclosed in brackets (`"[{x}-{y}]"`), it only fills the specified single cell.
 
-= Usage
+= API Reference
 
-#command(
+== pavemat
+
+#show-module(
   "pavemat",
-  arg[eq],
-  arg(pave: ()),
-  arg(stroke: ()),
-  arg(fills: (:)),
-  arg(dir-chars: (:)),
-  arg(display-style: true),
-  arg(block: auto),
-  arg(debug: false),
-)[
-  The pavemat function in Typst allows for the creation of styled and filled matrices with custom paths, strokes, and fills.
-
-  #argument("eq", types: ("math.equation", "math.mat", "array"))[
-    The input matrix expression to be styled. It can be a mathematical equation or a matrix. Specifically,
-
-    - A ```typc math.equation```. It should contain only a `math.mat` as its body. Example: ```typ $mat(1, 2; 3, 4)$```. ```typc math.display``` in the equation is not supported yet.
-    - A `math.mat`. Example: ```typc math.mat((1, 2), (3, 4))```.
-    - A nested array. Example: ```typc ((1, 2), (3, 4))```.
-
-    If a matrix type is given, pavemat will use its style, including `row-gap`, `column-gap` and `delim`.
-  ]
-
-  #argument("pave", types: ("string", "dictionary", "array"), default: ())[
-    Describes the pavement lines. It accepts the following formats:
-
-    - A path string like `"WASD"`.
-    - A dictionary with fields: `path`, `from` (optional, default: ```typc "top-left"```), `stroke` (optional, default: empty). The path is a pave string.
-    - An array whose item type is either string or dictionary described above.
-  ]
-
-  #argument("stroke", types: ("length", "color", "gradient", "pattern", "dictionary"))[
-    The global stroke style applying to all segments. This argument will be passed to `cell.stroke`.
-
-    Accepts anything can be used as stroke. Examples: ```typc blue + 1pt```, ```typc (dash: "dashed", thickness: 0.5pt)```.
-  ]
-
-  #argument("fills", types: ("color", "gradient", "pattern"))[
-    Specifies the fill colors for specific cells. The key represents a position, and the value is the color passed to `cell.fill`. An empty key `""` is used for global fill.
-  ]
-
-  #argument("dir-chars", types: "dictionary", default: (:))[
-    Controls whether the output is in display style. Its fields will override the default ```typc (up: "W", down: "S", left: "A", right: "D")```.
-
-    Example: ```typc (up: "U", down: "D", left: "L", right: "R")```
-  ]
-
-  #argument("block", types: (auto, "bool"), default: auto)[
-    Controls whether the output is block-style. If set to auto, it uses the block setting of the input equation.
-  ]
-
-  #argument("delim", types: (auto, "str"), default: auto)[
-    The delimiter of the matrix. If set to auto, it uses the delimiter of the input matrix.
-  ]
-
-  #argument("display-style", types: "bool", default: true)[
-    Controls whether the output is in display style. If set to `true`, the result will be granted a ```typc math.display(...)```.
-  ]
-
-  #argument("debug", types: ("bool"), default: false)[
-    Enables debug mode to show hidden lines. If set to a non-boolean value, it defines the debug stroke style.
-  ]
-
-  Example:
-
-  #example[```
-    #pavemat(
-      $ mat(1, 2, 3; 4, 5, 6; 7, 8, 9; 10, 11, 12) $,
-      pave: "dSDSDSLLAAWASSDD",
-      fills: (
-        "1-1": red.transparentize(80%),
-        "1-2": blue.transparentize(80%),
-        "3-0": green.transparentize(80%),
-      ),
-    )
-    ```]
-]
+  show-outline: false,
+  omit-private-parameters: true,
+  sort-functions: false,
+)
