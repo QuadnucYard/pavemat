@@ -6,8 +6,11 @@ export TYPST_ROOT := "."
 default:
   @just --list
 
-build-docs:
+doc:
   typst c docs/manual.typ
+
+test:
+  tt run
 
 render-examples:
   typst c examples/examples.typ -f pdf
