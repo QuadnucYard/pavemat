@@ -1,8 +1,9 @@
 # Pavemat
 
-![version](https://img.shields.io/badge/dynamic/toml?url=https%3A%2F%2Fraw.githubusercontent.com%2FQuadnucYard%2Fpavemat%2Frefs%2Fheads%2Fmain%2Ftypst.toml&query=%24.package.version&label=version&color=green)
+![version](https://img.shields.io/badge/dynamic/toml?url=https%3A%2F%2Fraw.githubusercontent.com%2FQuadnucYard%2Fpavemat%2Frefs%2Fheads%2Fmain%2Ftypst.toml&query=%24.package.version&label=version&color=orange)
 [![Universe](https://img.shields.io/badge/dynamic/xml?url=https%3A%2F%2Ftypst.app%2Funiverse%2Fpackage%2Fpavemat&query=%2Fhtml%2Fbody%2Fdiv%2Fmain%2Fdiv%5B2%5D%2Faside%2Fsection%5B2%5D%2Fdl%2Fdd%5B3%5D&logo=typst&label=Universe&color=%2339cccc)](https://typst.app/universe/package/pavemat)
 [![Repo](https://img.shields.io/badge/GitHub-repo-blue)](https://github.com/QuadnucYard/pavemat)
+[![Manual](https://img.shields.io/badge/docs-manual.pdf-green)](https://github.com/QuadnucYard/pavemat/releases/download/v0.2.0/manual.pdf)
 
 <div align="center">
   <img src="./examples/logo.svg"/>
@@ -36,7 +37,7 @@ To prevent overlapping just as `math.mat` and make elements in each row align wi
 The logo example:
 
 ```typst
-#import "@preview/pavemat:0.1.0": pavemat
+#import "@preview/pavemat:0.2.0": pavemat
 
 #set math.mat(row-gap: 0.25em, column-gap: 0.1em)
 #set text(size: 2em)
@@ -59,10 +60,81 @@ The logo example:
 
 More examples can be found in `examples/examples.typ`:
 
+---
+
 ![](./examples/example1.svg)
+
+```typst
+#pavemat(
+  a,
+  pave: "dSDSDSLLAAWASSDD",
+  fills: (
+    "1-1": red.transparentize(80%),
+    "1-2": blue.transparentize(80%),
+    "3-0": green.transparentize(80%),
+  ),
+)
+```
+
+---
+
 ![](./examples/example2.svg)
+
+```typst
+#pavemat(
+  a,
+  pave: (
+    path: "AA(paint: red, thickness: 2pt)WdD(paint: blue)Ww(thickness: 1pt, dash: 'dotted')AaS]Aw]W]D",
+    from: "bottom-right",
+  ),
+  fills: maroon.transparentize(90%),
+)
+```
+
+---
+
 ![](./examples/example4.svg)
+
+```typst
+#pavemat(
+  a,
+  pave: (
+    (path: "WASD", from: (2, 2)),
+    (path: "WDSA", from: "bottom-left", stroke: red + 0.5pt),
+    (path: "DSAW", from: (3, 2)),
+  ),
+  stroke: blue + 1pt,
+  fills: (
+    "": green.transparentize(80%),
+    "0-0": red.transparentize(80%),
+    "3-2": blue.transparentize(80%),
+  ),
+  delim: "[",
+)
+```
+
+---
+
 ![](./examples/example5.svg)
+
+```typst
+#pavemat(
+  math.mat(..range(5).map(i => range(5).map(j => i * 5 + j)), align: right),
+  pave: (
+    (path: "DDDDDRUUUUU", from: (0, 2)),
+    (path: "RRRRRDLLLLL", from: (2, 0)),
+  ),
+  fills: (
+    "": green.transparentize(80%),
+    "top-left": red.transparentize(80%),
+    "3-right": blue.transparentize(80%),
+    "[bottom-left]": blue.transparentize(80%),
+  ),
+  dir-chars: (up: "U", down: "D", left: "L", right: "R"),
+  block: true,
+  delim: none,
+)
+```
 
 ## License
 
