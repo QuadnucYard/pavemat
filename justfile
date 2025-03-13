@@ -1,23 +1,17 @@
-set shell := ["nu", "-c"]
-
-export TYPST_ROOT := "."
+export TYPST_ROOT := justfile_directory()
 
 
 default:
   @just --list
 
 doc:
-  typst c docs/manual.typ
+  typst c docs/manual.typ -f pdf
+  typst c examples/examples.typ -f pdf
+  ./scripts/render-examples.sh
 
 test:
-  tt run
+  tt run --no-fail-fast
 
-render-examples:
-  typst c examples/examples.typ -f pdf
-  @just _render-example 1
-  @just _render-example 2
-  @just _render-example 4
-  @just _render-example 5
-
-_render-example index:
-  typst c examples/render.typ "examples/example{{index}}.svg" --input "example-index={{index}}"
+# package the library into the specified destination folder
+package target="out":
+  ./scripts/package.sh "{{target}}"
