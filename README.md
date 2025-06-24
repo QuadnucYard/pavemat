@@ -3,7 +3,7 @@
 ![version](https://img.shields.io/badge/dynamic/toml?url=https%3A%2F%2Fraw.githubusercontent.com%2FQuadnucYard%2Fpavemat%2Frefs%2Fheads%2Fmain%2Ftypst.toml&query=%24.package.version&label=version&color=orange)
 [![Universe](https://img.shields.io/badge/dynamic/xml?url=https%3A%2F%2Ftypst.app%2Funiverse%2Fpackage%2Fpavemat&query=%2Fhtml%2Fbody%2Fdiv%2Fmain%2Fdiv%5B2%5D%2Faside%2Fsection%5B2%5D%2Fdl%2Fdd%5B3%5D&logo=typst&label=Universe&color=%2339cccc)](https://typst.app/universe/package/pavemat)
 [![Repo](https://img.shields.io/badge/GitHub-repo-blue)](https://github.com/QuadnucYard/pavemat)
-[![Manual](https://img.shields.io/badge/docs-manual.pdf-green)](https://github.com/QuadnucYard/pavemat/releases/download/v0.2.0/manual.pdf)
+[![Documentation](https://img.shields.io/badge/docs-GitHub%20Pages-blue)](https://quadnucyard.github.io/pavemat/)
 
 <div align="center">
   <img src="./examples/logo.svg"/>

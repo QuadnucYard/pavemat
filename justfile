@@ -1,17 +1,22 @@
+set shell := ["nu", "-c"]
+
 export TYPST_ROOT := justfile_directory()
 
 
 default:
   @just --list
 
-doc:
-  typst c docs/manual.typ -f pdf
-  typst c examples/examples.typ -f pdf
-  ./scripts/render-examples.sh
+# Build documentation website to docs/dist/
+build-docs:
+  nu scripts/build-docs.nu
+
+[working-directory: 'docs/dist']
+preview-docs:
+  bunx serve
 
 test:
   tt run --no-fail-fast
 
 # package the library into the specified destination folder
 package target="out":
-  ./scripts/package.sh "{{target}}"
+  nu scripts/package.nu {{target}}

@@ -1,0 +1,161 @@
+/* Pavemat Documentation Site Styles */
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    line-height: 1.6;
+    color: #333;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 2rem 0;
+    border-bottom: 2px solid #eee;
+}
+
+.logo {
+    max-width: 200px;
+    margin-bottom: 1rem;
+}
+
+.subtitle {
+    color: #666;
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+.docs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.doc-card {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.doc-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.doc-card h3 {
+    margin-top: 0;
+    color: #2c3e50;
+}
+
+.doc-card p {
+    color: #666;
+    margin-bottom: 1rem;
+}
+
+.doc-link {
+    display: inline-block;
+    background: #39cccc;
+    color: white;
+    text-decoration: none;
+    padding: 0.7rem 1.5rem;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.doc-link:hover {
+    background: #2fb5b5;
+}
+
+.badges {
+    margin: 1rem 0;
+}
+
+.badges img {
+    margin: 0 0.25rem;
+}
+
+.links {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.links a {
+    color: #39cccc;
+    text-decoration: none;
+    margin: 0 1rem;
+}
+
+.links a:hover {
+    text-decoration: underline;
+}
+
+/* Examples Section */
+.examples-section {
+    margin: 3rem 0;
+    padding: 2rem 0;
+    border-top: 2px solid #eee;
+}
+
+.examples-section h2 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+}
+
+.examples-section > p {
+    text-align: center;
+    color: #666;
+    margin-bottom: 2rem;
+}
+
+.examples-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.example-card {
+    background: #fafbfc;
+    border: 1px solid #e1e4e8;
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.example-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.example-image {
+    max-width: 100%;
+    height: auto;
+    max-height: 120px;
+    margin-bottom: 0.8rem;
+    border-radius: 4px;
+    background: white;
+    padding: 0.5rem;
+    border: 1px solid #e1e4e8;
+}
+
+.example-card h4 {
+    margin: 0.5rem 0;
+    color: #2c3e50;
+    font-size: 1rem;
+}
+
+.example-card p {
+    color: #666;
+    font-size: 0.9rem;
+    margin: 0;
+    line-height: 1.4;
+}
